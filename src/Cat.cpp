@@ -9,8 +9,8 @@ Cat::Cat()
 	// framesize is 512 x 256
 	
 	auto size = TheTextureManager::Instance()->getTextureSize("cat");
-	setWidth(size.x);
-	setHeight(size.y);
+	setWidth(512);
+	setHeight(256);
 
 	std::cout << "width: " << size.x << " height: " << size.y << std::endl;
 	setPosition(glm::vec2(400.0f, 300.0f));

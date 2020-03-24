@@ -218,8 +218,11 @@ void TextureManager::drawFrame(const std::string& id, const int x, const int y, 
 	SDL_RenderCopyEx(renderer, m_textureMap[id].get(), &srcRect, &destRect, angle, nullptr, flip);
 }
 
-void TextureManager::drawFrame(const std::string& id, const int x, const int y, const int frame_width, const int frame_height, int &current_row,
-                               int &current_frame, int frame_number, int row_number, float speed_factor, SDL_Renderer* renderer, const double angle, const int alpha, const bool centered, const SDL_RendererFlip flip)
+void TextureManager::drawFrame(const std::string& id, const int x, const int y, const int frame_width, 
+							   const int frame_height, int &current_row,
+                               int &current_frame, int frame_number, int row_number, 
+							   float speed_factor, SDL_Renderer* renderer, const double angle, 
+							   const int alpha, const bool centered, const SDL_RendererFlip flip)
 {
 	animate(frame_width, frame_height, frame_number, row_number, speed_factor, current_frame, current_row);
 	
