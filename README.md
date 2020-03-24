@@ -1,1 +1,1 @@
-# GAME3001 - S2020 - Lesson 5 - Repo for Pathfinding
+# COMP397 - W2020 - Lesson 10
