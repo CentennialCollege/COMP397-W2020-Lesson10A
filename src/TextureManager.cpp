@@ -261,24 +261,29 @@ void TextureManager::drawFrame(const std::string& id, const int x, const int y, 
 	SDL_RenderCopyEx(renderer, m_textureMap[id].get(), &srcRect, &destRect, angle, nullptr, flip);
 }
 
-void TextureManager::animate(int frame_width, int frame_height, int frame_number, int row_number, float speed_factor, int &current_frame, int &current_row)
+void TextureManager::animate(int frame_width, int frame_height, const int frame_number, const int row_number, const float speed_factor, int &current_frame, int &current_row)
 {
-	const auto total_frames = frame_number * row_number;
-	int animation_rate =  round(total_frames / 2 / speed_factor);
-	
-	if (TheGame::Instance()->getFrames() % animation_rate == 0)
+	const auto totalFrames = frame_number * row_number;
+	const int animationRate =  round(totalFrames / 2 / speed_factor);
+
+
+	if(frame_number > 1)
 	{
-		current_frame++;
-		if (current_frame > frame_number - 1)
+		if (TheGame::Instance()->getFrames() % animationRate == 0)
 		{
-			current_frame = 0;
-			current_row++;
-		}
-		if (current_row > row_number - 1)
-		{
-			current_row = 0;
+			current_frame++;
+			if (current_frame > frame_number - 1)
+			{
+				current_frame = 0;
+				current_row++;
+			}
+			if (current_row > row_number - 1)
+			{
+				current_row = 0;
+			}
 		}
 	}
+	
 }
 
 void TextureManager::drawText(const std::string& id, const int x, const int y, SDL_Renderer * renderer, const double angle, const int alpha, const bool centered, const SDL_RendererFlip flip)

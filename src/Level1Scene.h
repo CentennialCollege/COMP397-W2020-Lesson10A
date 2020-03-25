@@ -3,7 +3,8 @@
 #define __LEVEL1_SCENE__
 
 #include "Scene.h"
-#include "Cat.h"
+#include "Player.h"
+
 
 
 class Level1Scene : public Scene
@@ -21,7 +22,8 @@ public:
 private:
 	glm::vec2 m_mousePosition;
 
-	Cat* m_pCat;
+	Player* m_pPlayer;
+
 };
 
 #endif /* defined (__LEVEL1_SCENE__) */

@@ -28,6 +28,9 @@ void Level1Scene::clean()
 void Level1Scene::handleEvents()
 {
 	auto wheel = 0;
+
+	SDL_Keycode keyPressed;
+	SDL_Keycode keyReleased;
 	
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
@@ -45,7 +48,7 @@ void Level1Scene::handleEvents()
 			wheel = event.wheel.y;
 			break;
 		case SDL_KEYDOWN:
-			const auto keyPressed = event.key.keysym.sym;
+			keyPressed = event.key.keysym.sym;
 			switch (keyPressed)
 			{
 			case SDLK_ESCAPE:
@@ -68,8 +71,8 @@ void Level1Scene::handleEvents()
 
 				if (keyPressed == SDLK_a)
 				{
-					std::cout << "move left" << std::endl;
-
+					//std::cout << "move left" << std::endl;
+					m_pPlayer->setAnimationState(PLAYER_RUN_LEFT);
 				}
 
 				if (keyPressed == SDLK_s)
@@ -80,18 +83,32 @@ void Level1Scene::handleEvents()
 
 				if (keyPressed == SDLK_d)
 				{
-					std::cout << "move right" << std::endl;
-				
+					//std::cout << "move right" << std::endl;
+					m_pPlayer->setAnimationState(PLAYER_RUN_RIGHT);
 				}
 			}
 			
 			break;
+		case SDL_KEYUP:
+			keyReleased = event.key.keysym.sym;
+
+			if (keyReleased == SDLK_a)
+			{
+				m_pPlayer->setAnimationState(PLAYER_IDLE_LEFT);
+			}
+
+			if (keyReleased == SDLK_d)
+			{
+				m_pPlayer->setAnimationState(PLAYER_IDLE_RIGHT);
+			}
+			break;
+			
 		}
 	}
 }
 
 void Level1Scene::start()
 {
-	m_pCat = new Cat();
-	addChild(m_pCat);
+	m_pPlayer = new Player();
+	addChild(m_pPlayer);
 }

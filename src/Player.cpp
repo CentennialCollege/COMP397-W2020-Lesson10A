@@ -1,39 +1,74 @@
 #include "Player.h"
 #include "Game.h"
 
-Player::Player()
+Player::Player():m_currentRow(0), m_currentFrame(0), m_currentAnimationState(PLAYER_IDLE_RIGHT)
 {
-	TheTextureManager::Instance()->load("../Assets/textures/plane.png", "player", TheGame::Instance()->getRenderer());
-	setPosition(glm::vec2(0, 430.0f));
+	TheTextureManager::Instance()->load("../Assets/sprites/megaman-idle.png",
+		"player-idle", TheGame::Instance()->getRenderer());
 
-	glm::vec2 size = TheTextureManager::Instance()->getTextureSize("player");
-	setWidth(size.x);
-	setHeight(size.y);
+	TheTextureManager::Instance()->load("../Assets/sprites/megaman-run.png",
+		"player-run", TheGame::Instance()->getRenderer());
+
+	setWidth(81);
+	setHeight(58);
+
+	setPosition(glm::vec2(400.0f, 300.0f));
+	setVelocity(glm::vec2(0.0f, 0.0f));
+	setAcceleration(glm::vec2(0.0f, 0.0f));
 	setIsColliding(false);
-	setType(GameObjectType::PLAYER);
-
-	TheSoundManager::Instance()->load("../Assets/audio/engine.ogg",
-		"engine", sound_type::SOUND_MUSIC);
-
-	TheSoundManager::Instance()->playMusic("engine", -1);
+	setType(PLAYER);
 }
 
 Player::~Player()
-{
-}
+= default;
 
 void Player::draw()
 {
-	TheTextureManager::Instance()->draw("player", getPosition().x, getPosition().y, TheGame::Instance()->getRenderer(), true);
+	const int xComponent = getPosition().x;
+	const int yComponent = getPosition().y;
+
+
+	switch(m_currentAnimationState)
+	{
+	case PLAYER_IDLE_RIGHT:
+		TheTextureManager::Instance()->drawFrame("player-idle", xComponent, yComponent,
+			getWidth(), getHeight(), m_currentRow, m_currentFrame,
+			4, 1, 0.12,
+			TheGame::Instance()->getRenderer(), 0, 255, true);
+		break;
+	case PLAYER_IDLE_LEFT:
+		TheTextureManager::Instance()->drawFrame("player-idle", xComponent, yComponent,
+			getWidth(), getHeight(), m_currentRow, m_currentFrame,
+			4, 1, 0.12,
+			TheGame::Instance()->getRenderer(), 0, 255, true, SDL_FLIP_HORIZONTAL);
+		break;
+	case PLAYER_RUN_RIGHT:
+		TheTextureManager::Instance()->drawFrame("player-run", xComponent, yComponent,
+			getWidth(), getHeight(), m_currentRow, m_currentFrame,
+			4, 1, 0.25,
+			TheGame::Instance()->getRenderer(), 0, 255, true);
+		break;
+	case PLAYER_RUN_LEFT:
+		TheTextureManager::Instance()->drawFrame("player-run", xComponent, yComponent,
+			getWidth(), getHeight(), m_currentRow, m_currentFrame,
+			4, 1, 0.25,
+			TheGame::Instance()->getRenderer(), 0, 255, true, SDL_FLIP_HORIZONTAL);
+		break;
+	}
+	
+	
+	
 }
 
 void Player::update()
 {
-	glm::vec2 mouseVector = TheGame::Instance()->getMousePosition();
-
-	setPosition(glm::vec2(mouseVector.x, getPosition().y));
 }
 
 void Player::clean()
 {
+}
+
+void Player::setAnimationState(const PlayerAnimationState new_state)
+{
+	m_currentAnimationState = new_state;
 }

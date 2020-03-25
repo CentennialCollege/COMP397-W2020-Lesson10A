@@ -9,6 +9,7 @@ enum GameObjectType {
 	MINE,
 	TILE,
 	CAT,
+	PLAYER,
 	NUM_OF_TYPES
 };
 #endif /* defined (__GAME_OBJECT_TYPE__) */

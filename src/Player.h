@@ -1,27 +1,30 @@
 #pragma once
-#ifndef __Player__
-#define __Player__
+#ifndef __PLAYER__
+#define __PLAYER__
 
-#include "GameObject.h"
-#include "TextureManager.h"
-#include "SoundManager.h"
+#include "DisplayObject.h"
+#include "PlayerAnimationState.h"
 
-class Player : public GameObject {
+class Player : public DisplayObject
+{
 public:
 	Player();
 	~Player();
 
-	// Draw the object
-	void draw();
+	// Life Cycle Methods
+	virtual void draw() override;
+	virtual void update() override;
+	virtual void clean() override;
 
-	// Update the object
-	void update();
+	// setters
+	void setAnimationState(PlayerAnimationState new_state);
 
-	// remove anything that needs to be deleted
-	void clean();
 private:
 
+	int m_currentRow;
+	int m_currentFrame;
+
+	PlayerAnimationState m_currentAnimationState;
 };
 
-
-#endif /* defined (__Player__) */
+#endif /* defined (__PLAYER__) */
